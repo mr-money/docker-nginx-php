@@ -11,10 +11,10 @@ services:
       - E:\Gopath\src\ptah-craft\Web:/var/ptah-craft/Web
     depends_on:
       - php74
-      - php81
+      - php82
     links:
       - php74
-      - php81
+      - php82
     restart: always
 
   php74:
@@ -27,12 +27,12 @@ services:
       - E:\WWW:/var/www
     restart: always
 
-  php81:
+  php82:
     build:
       context: .
-      dockerfile: DockerfilePHP81
-    image: php:8.1-fpm
-    container_name: php81
+      dockerfile: DockerfilePHP82
+    image: php:8.2-fpm
+    container_name: php82
     volumes:
        - E:\WWW:/var/www
     restart: always

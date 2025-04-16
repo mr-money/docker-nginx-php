@@ -1,0 +1,19 @@
+FROM php:8.2-fpm
+
+# Composer安装
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer self-update --clean-backups \
+    && composer config -g repos.packagist composer https://mirrors.tencent.com/composer/
+
+# 安装扩展
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+	git \
+        php-zip \
+	unzip\
+
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql bcmath -j$(nproc) gd fileinfo
