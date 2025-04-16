@@ -6,14 +6,26 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && composer self-update --clean-backups \
     && composer config -g repos.packagist composer https://mirrors.tencent.com/composer/
 
+# 确保 /etc/apt/ 目录存在
+RUN mkdir -p /etc/apt/
+
+# 更新镜像源为阿里云
+RUN echo "deb https://mirrors.aliyun.com/debian bookworm main non-free contrib" > /etc/apt/sources.list && \
+    echo "deb-src https://mirrors.aliyun.com/debian bookworm main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.aliyun.com/debian bookworm-updates main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src https://mirrors.aliyun.com/debian bookworm-updates main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.aliyun.com/debian bookworm-backports main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src https://mirrors.aliyun.com/debian bookworm-backports main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb https://mirrors.aliyun.com/debian-security bookworm-security main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src https://mirrors.aliyun.com/debian-security bookworm-security main non-free contrib" >> /etc/apt/sources.list
+
 # 安装扩展
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
-	git \
-        php-zip \
-	unzip\
-
+	git\
+        unzip\
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql bcmath -j$(nproc) gd fileinfo
+
