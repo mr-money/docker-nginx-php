@@ -18,20 +18,20 @@ services:
     restart: always
 
   php74:
-    build:
-      context: .
-      dockerfile: DockerfilePHP74
-    image: php:7.4-fpm
+#    build:
+#      context: .
+#      dockerfile: DockerfilePHP74
+    image: qianjing/php:7.4-fpm
     container_name: php74
     volumes:
       - E:\WWW:/var/www
     restart: always
 
   php82:
-    build:
-      context: .
-      dockerfile: DockerfilePHP82
-    image: php:8.2-fpm
+#    build:
+#      context: .
+#      dockerfile: DockerfilePHP82
+    image: qianjing/php:8.2-fpm
     container_name: php82
     volumes:
        - E:\WWW:/var/www
